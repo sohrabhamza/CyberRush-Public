@@ -41,6 +41,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI runningScore;
     [SerializeField] TextMeshProUGUI runningHighScore;
     [SerializeField] GameObject deathPanel;
+    [SerializeField] GameObject joysticks;
 
     [Header("Audio")]
     [SerializeField] AudioClip[] music;
@@ -250,6 +251,7 @@ public class LevelManager : MonoBehaviour
         deathPanel.SetActive(true);
         runningScore.transform.parent.gameObject.SetActive(false);
         runningHighScore.transform.parent.gameObject.SetActive(false);
+        joysticks.SetActive(false);
         if (localScore > localHighScore)
         {
             localHighScore = localScore;

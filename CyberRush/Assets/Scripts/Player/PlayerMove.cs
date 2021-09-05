@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerMove : MonoBehaviour
 {
     //Serialized
     [SerializeField] float speed = 7;
     [SerializeField] Animator animator;
+    [SerializeField] FloatingJoystick moveJoystick;
     //Private
     Vector3 direction;
-    Rigidbody rb;
+    // Rigidbody rb;
+    CharacterController characterController;
     public bool active = true;
     Vector3 currentPos = Vector3.zero;
     [SerializeField] Transform playerBody;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        // rb = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
+
     }
     void Update()
     {
@@ -26,26 +29,29 @@ public class PlayerMove : MonoBehaviour
             animator.SetFloat("Vertical", 0);
             return;
         }
-        direction = new Vector3(Input.GetAxisRaw("Horizontal"), transform.position.y, Input.GetAxisRaw("Vertical"));
+        // direction = new Vector3(Input.GetAxisRaw("Horizontal"), transform.position.y, Input.GetAxisRaw("Vertical"));
+        direction = new Vector3(moveJoystick.Horizontal, 0, moveJoystick.Vertical);
     }
     private void FixedUpdate()
     {
         if (!active) return;
         Move();
-        rb.velocity = Vector3.zero;
 
-        Vector3 beforePos = transform.position;
-        Vector3 velocity = currentPos - beforePos;
-        Vector3 velo = playerBody.transform.InverseTransformDirection(velocity);
+        // Vector3 beforePos = transform.position;
+        // Vector3 velocity = currentPos - beforePos;
+        // Vector3 velo = playerBody.transform.InverseTransformDirection(velocity);
 
-        currentPos = transform.position;
+        // currentPos = transform.position;
 
-        animator.SetFloat("Horizontal", velo.x);
-        animator.SetFloat("Vertical", velo.z);
+        // animator.SetFloat("Horizontal", velo.x);
+        // animator.SetFloat("Vertical", velo.z);
+        animator.SetFloat("Horizontal", characterController.velocity.x);
+        animator.SetFloat("Vertical", characterController.velocity.z);
     }
     void Move()
     {
-        rb.MovePosition(transform.position + (direction * speed * Time.deltaTime));
-        rb.velocity = Vector3.zero;
+        characterController.Move(direction * speed * Time.deltaTime);
+        // rb.MovePosition(transform.position + (direction * speed * Time.deltaTime));
+        // rb.velocity = Vector3.zero;
     }
 }

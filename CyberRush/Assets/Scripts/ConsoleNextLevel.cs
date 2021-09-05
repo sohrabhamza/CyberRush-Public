@@ -29,7 +29,7 @@ public class ConsoleNextLevel : MonoBehaviour
     {
         if (playerNear)     //If player is near...
         {
-            if (Input.GetKeyDown(KeyCode.E))    //And they press e...
+            if (Input.GetKeyDown(KeyCode.E) || pressed == true)    //And they press e...
             {
                 GameObject.FindObjectOfType<LevelManager>().consolePressed = true;      //Tell the level manager to make a new level
 
@@ -41,8 +41,15 @@ public class ConsoleNextLevel : MonoBehaviour
                 consoleActive = false;
                 textPrompt.SetActive(false);
                 hintText.SetActive(false);
+                pressed = false;
             }
         }
+    }
+
+    bool pressed;
+    public void Press()
+    {
+        pressed = true;
     }
 
     private void OnTriggerExit(Collider other)
