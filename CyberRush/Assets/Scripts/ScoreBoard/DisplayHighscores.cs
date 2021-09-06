@@ -48,7 +48,8 @@ public class DisplayHighscores : MonoBehaviour
     {
         while (true)
         {
-            myScores.DownloadScores();
+            // myScores.DownloadScores();
+            HighScores.UploadScore("notwork", 1);
             yield return new WaitForSeconds(30);
         }
     }

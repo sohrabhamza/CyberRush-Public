@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 
 public class MenuUI : MonoBehaviour
 {
@@ -14,12 +15,20 @@ public class MenuUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI highscoreDisplay;
     [SerializeField] float usernameHeight, nonUsernameHeight;
     [SerializeField] GameObject pauseScreen;
+    [SerializeField] RenderPipelineAsset[] qualityLevels;
     // [SerializeField] AudioMixer mixer;
 
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (!PlayerPrefs.HasKey("Username"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        }
     }
 
     public void UsernameEntry(string user)
@@ -49,7 +58,7 @@ public class MenuUI : MonoBehaviour
 
         if (usernameDisplayText != null)
         {
-            Camera.main.gameObject.transform.position = new Vector3(Camera.main.gameObject.transform.position.x, nonUsernameHeight, Camera.main.gameObject.transform.position.z);
+            // Camera.main.gameObject.transform.position = new Vector3(Camera.main.gameObject.transform.position.x, nonUsernameHeight, Camera.main.gameObject.transform.position.z);
             if (PlayerPrefs.HasKey("Username"))
             {
                 Camera.main.gameObject.transform.position = new Vector3(Camera.main.gameObject.transform.position.x, usernameHeight, Camera.main.gameObject.transform.position.z);
@@ -85,7 +94,7 @@ public class MenuUI : MonoBehaviour
         usernameDisplayText.gameObject.SetActive(false);
         PlayerPrefs.DeleteKey("Username");
         PlayerPrefs.DeleteKey("HighScore");
-        Camera.main.gameObject.transform.position = new Vector3(Camera.main.gameObject.transform.position.x, usernameHeight, Camera.main.gameObject.transform.position.z);
+        // Camera.main.gameObject.transform.position = new Vector3(Camera.main.gameObject.transform.position.x, usernameHeight, Camera.main.gameObject.transform.position.z);
     }
 
     public void RestartGame()
@@ -109,5 +118,11 @@ public class MenuUI : MonoBehaviour
         Time.timeScale = paused ? 1 : 0;
         pauseScreen.SetActive(paused ? false : true);
         paused = !paused;
+    }
+
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+        QualitySettings.renderPipeline = qualityLevels[qualityIndex];
     }
 }

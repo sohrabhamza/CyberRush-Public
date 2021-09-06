@@ -3646,7 +3646,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Next Level has been unlocked. Go to the center and press E
+  m_text: Next Level has been unlocked. Go to the center.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2fcfd0f12c90794380cbb63043a97f7, type: 2}
   m_sharedMaterial: {fileID: -6835151590289985344, guid: f2fcfd0f12c90794380cbb63043a97f7, type: 2}
