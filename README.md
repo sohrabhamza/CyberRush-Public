@@ -13,3 +13,9 @@ The code that I am most proud of for this project is housed mainly in the levelm
 
 ROADMAP
 I'm done with this project. You can do whatever you want with it. 
+
+How to Build
+1) Download Unity Hub.
+2) Download Unity Version 2021.1.19f1.
+3) Add project to unity Hub.
+4) Build.
